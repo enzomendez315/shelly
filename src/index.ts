@@ -1,4 +1,4 @@
-import { createInterface } from "readline";
+import { createInterface } from 'readline';
 
 const rl = createInterface({
   input: process.stdin,
@@ -6,18 +6,30 @@ const rl = createInterface({
 });
 
 function run() {
-  rl.question("$ ", (command) => {
-    command = command.trim()
+  rl.question('$ ', (command: string) => {
+    command = command.trim();
+    const [cmd, ...args] = command.split(/\s+/);
 
-    if (command === "exit 0") {
-      process.exit(0);
-    }
-    else if (command.startsWith("echo")) {
-      const message = command.slice(4).trim();
-      console.log(message);
-    }
-    else {
-      rl.write(`${command}: command not found\n`);
+    switch(cmd) {
+      case 'exit':
+        if (args[0] === '0') process.exit(0);
+        else console.log('Usage: exit 0');
+        break;
+      case 'echo':
+        const message = args.join(' ');
+        console.log(message);
+        break;
+      case 'type':
+        const target = args[0];
+        const builtins = ['exit', 'echo', 'type'];
+        if (builtins.includes(target)) {
+          console.log(`${target} is a shell builtin`);
+        } else {
+          console.log(`${target || command}: not found`)
+        }
+        break;
+      default:
+        console.log(`${command}: command not found`);
     }
 
     run();
