@@ -18,12 +18,18 @@ func Run() error {
 			return fmt.Errorf("error reading input: %w", err)
 		}
 
-		command = strings.TrimSpace(command)
+		parts := strings.Split(strings.TrimSpace(command), " ")
+		cmd := parts[0]
 
-		if command == "exit" {
+		switch cmd {
+		case "exit":
 			os.Exit(0)
+		case "echo":
+			fmt.Println(strings.Join(parts[1:], " "))
+		case "":
+			continue
+		default:
+			fmt.Println(cmd + ": command not found")
 		}
-
-		fmt.Println(command + ": command not found")
 	}
 }
