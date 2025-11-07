@@ -18,18 +18,29 @@ func Run() error {
 			return fmt.Errorf("error reading input: %w", err)
 		}
 
-		parts := strings.Split(strings.TrimSpace(command), " ")
-		cmd := parts[0]
-
-		switch cmd {
-		case "exit":
-			os.Exit(0)
-		case "echo":
-			fmt.Println(strings.Join(parts[1:], " "))
-		case "":
-			continue
-		default:
-			fmt.Println(cmd + ": command not found")
+		parts := strings.Fields(command)
+		if err := handleCommand(parts); err != nil {
+			return fmt.Errorf("error parsing command: %w", err)
 		}
 	}
+}
+
+func handleCommand(parts []string) error {
+	if len(parts) == 0 {
+		return nil
+	}
+
+	cmd := parts[0]
+	args := parts[1:]
+
+	switch cmd {
+	case "exit":
+		os.Exit(0)
+	case "echo":
+		fmt.Println(strings.Join(args, " "))
+	default:
+		fmt.Println(cmd + ": command not found")
+	}
+
+	return nil
 }
