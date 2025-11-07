@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+var builtins = map[string]struct{}{
+	"exit": {},
+	"echo": {},
+	"type": {},
+}
+
 func Run() error {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -38,9 +44,25 @@ func handleCommand(parts []string) error {
 		os.Exit(0)
 	case "echo":
 		fmt.Println(strings.Join(args, " "))
+	case "type":
+		handleType(args)
 	default:
 		fmt.Println(cmd + ": command not found")
 	}
 
 	return nil
+}
+
+func handleType(args []string) {
+	if len(args) == 0 {
+		fmt.Println("type: missing operand")
+		return
+	}
+
+	cmd := args[0]
+	if _, ok := builtins[cmd]; ok {
+		fmt.Println(cmd + " is a shell builtin")
+	} else {
+		fmt.Println(cmd + ": not found")
+	}
 }
