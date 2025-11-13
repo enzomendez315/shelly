@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"shelly/internal/shell"
+	"shelly/go/internal/shell"
 )
 
 func main() {
