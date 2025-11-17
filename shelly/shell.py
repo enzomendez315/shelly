@@ -3,7 +3,7 @@ import sys
 
 class Shell():
     def __init__(self):
-        pass
+        self.builtins = set(["exit", "echo", "type"])
 
     def run(self):
         sys.stdout.write("$ ")
@@ -30,5 +30,13 @@ class Shell():
                 sys.exit()
             case "echo":
                 sys.stdout.write(f"{args}\n")
+            case "type":
+                self.handle_type(args)
             case _:
                 sys.stdout.write(f"{cmd}: command not found\n")
+
+    def handle_type(self, type: str):
+        if type in self.builtins:
+            sys.stdout.write(f"{type} is a shell builtin\n")
+        else:
+            sys.stdout.write(f"{type}: not found\n")
