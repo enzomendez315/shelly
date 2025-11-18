@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 import sys
@@ -5,7 +6,7 @@ import sys
 
 class Shell():
     def __init__(self):
-        self.builtins = set(["exit", "echo", "type"])
+        self.builtins = set(["exit", "echo", "type", "pwd", "cd"])
 
     def run(self):
         """Starts the interactive shell REPL.
@@ -45,6 +46,8 @@ class Shell():
                 sys.stdout.write(f"{" ".join(args)}\n")
             case "type":
                 self.handle_type(" ".join(args))
+            case "pwd" | "cd":
+                self.handle_navigation(cmd, args)
             case _:
                 if not self.handle_external(cmd, args):
                     sys.stdout.write(f"{cmd}: command not found\n")
@@ -75,3 +78,16 @@ class Shell():
             return True
         
         return False
+    
+    def handle_navigation(self, cmd, args):
+        if cmd == "pwd":
+            sys.stdout.write(f"{os.getcwd()}\n")
+        else:
+            if len(args) > 1:
+                sys.stdout.write(f"{cmd}: too many arguments\n")
+                return
+            
+            try:
+                os.chdir(args[0]) if len(args) == 1 else os.environ.get("HOME")
+            except FileNotFoundError:
+                sys.stdout.write(f"{cmd}: {args[0]}: No such file or directory\n")
