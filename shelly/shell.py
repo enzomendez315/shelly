@@ -87,7 +87,14 @@ class Shell():
                 sys.stdout.write(f"{cmd}: too many arguments\n")
                 return
             
+            if len(args) == 1:
+                path = args[0]
+                if path == "~":
+                    path = os.getenv("HOME")
+            else:
+                path = os.getenv("HOME")
+            
             try:
-                os.chdir(args[0]) if len(args) == 1 else os.environ.get("HOME")
+                os.chdir(path)
             except FileNotFoundError:
                 sys.stdout.write(f"{cmd}: {args[0]}: No such file or directory\n")
