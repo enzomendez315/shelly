@@ -19,7 +19,7 @@ class Shell():
 
         while True:
             command = sys.stdin.readline().strip()
-            line = command.split()
+            line = command.split(" ")
             
             self.handle_command(line)
             
@@ -43,21 +43,25 @@ class Shell():
             case "exit":
                 sys.exit()
             case "echo":
-                sys.stdout.write(f"{" ".join(args)}\n")
+                self.handle_echo(args)
             case "type":
-                self.handle_type(" ".join(args))
+                self.handle_type(args)
             case "pwd" | "cd":
                 self.handle_navigation(cmd, args)
             case _:
                 if not self.handle_external(cmd, args):
                     sys.stdout.write(f"{cmd}: command not found\n")
 
-    def handle_type(self, type: str):
+    def handle_echo(self, args: list[str]):
+        sys.stdout.write(f"{" ".join(args)}\n")
+
+    def handle_type(self, args: list[str]):
         """Checks the type of a command.
 
         Determines whether the given name corresponds to a shell 
         builtin, an external executable, or is not found.
         """
+        type = " ".join(args)
         if type in self.builtins:
             sys.stdout.write(f"{type} is a shell builtin\n")
         elif path := shutil.which(type):
@@ -65,7 +69,7 @@ class Shell():
         else:
             sys.stdout.write(f"{type}: not found\n")
 
-    def handle_external(self, cmd, args):
+    def handle_external(self, cmd: str, args: list[str]):
         """Attempts to execute an external command.
 
         Runs the specified command with the provided arguments if it 
@@ -79,7 +83,7 @@ class Shell():
         
         return False
     
-    def handle_navigation(self, cmd, args):
+    def handle_navigation(self, cmd: str, args: list[str]):
         if cmd == "pwd":
             sys.stdout.write(f"{os.getcwd()}\n")
         else:
