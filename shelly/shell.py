@@ -1,4 +1,5 @@
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -19,7 +20,7 @@ class Shell():
 
         while True:
             command = sys.stdin.readline().strip()
-            line = command.split(" ")
+            line = shlex.split(command)
             
             self.handle_command(line)
             
@@ -53,6 +54,13 @@ class Shell():
                     sys.stdout.write(f"{cmd}: command not found\n")
 
     def handle_echo(self, args: list[str]):
+        """Prints the given arguments to standard output.
+
+        Assumes arguments have already been parsed by `shlex.split()`,
+        matching standard Unix shell parsing rules. Joins the arguments
+        with a single space and writes the resulting text followed by a
+        newline.
+        """
         sys.stdout.write(f"{" ".join(args)}\n")
 
     def handle_type(self, args: list[str]):
