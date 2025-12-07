@@ -1,18 +1,63 @@
-#🐍 Simple Python Shell
-A minimal implementation of a Unix-like shell written in Python. This project provides an interactive command-line interface (CLI) with support for several built-in commands and the ability to execute external system programs.
+# 🐍 Simple Python Shell
 
-##✨ Features
-Interactive REPL: Continuously reads, executes, and prints results for commands.
-Built-in Commands: Includes implementations for common shell commands: exit, echo, type, pwd, and cd.
-External Command Execution: Can execute any program found in the system's PATH (e.g., ls, cat).
-Argument Parsing: Uses Python's shlex module for robust command-line argument parsing.
+A minimal implementation of a Unix-like shell written entirely in Python. This project provides an interactive command-line interface (CLI) with support for several built-in commands and the ability to execute external system programs via the system's `PATH`.
 
-##🛠️ Project StructureThe project is organized into two files:.
-├── shelly/
-    └── main.py  # Entry point that instantiates and runs the Shell
-    └── shell.py     # Contains the Shell class definition and logic
+---
 
-##🚀 Installation & Usage
+## ✨ Features
+
+* **Interactive REPL:** Continuously reads commands, executes them, and prints results with a standard shell prompt (`$ `).
+* **Core Built-ins:** Includes robust implementations for essential commands: `exit`, `echo`, `type`, `pwd`, and `cd`.
+* **External Command Execution:** Executes any program found in the system's `PATH` using `subprocess.run()`.
+* **Robust Parsing:** Utilizes Python's `shlex` module for accurate command-line argument splitting, handling quotes and spaces correctly.
+
+---
+
+## 🛠️ Project Structure
+
+Certainly! Here is the complete README content formatted as plain text using standard Markdown for easy copying into a README.md file.
+
+Markdown
+
+# 🐍 Simple Python Shell
+
+A minimal implementation of a Unix-like shell written entirely in Python. This project provides an interactive command-line interface (CLI) with support for several built-in commands and the ability to execute external system programs via the system's `PATH`.
+
+---
+
+## ✨ Features
+
+* **Interactive REPL:** Continuously reads commands, executes them, and prints results with a standard shell prompt (`$ `).
+* **Core Built-ins:** Includes robust implementations for essential commands: `exit`, `echo`, `type`, `pwd`, and `cd`.
+* **External Command Execution:** Executes any program found in the system's `PATH` using `subprocess.run()`.
+* **Robust Parsing:** Utilizes Python's `shlex` module for accurate command-line argument splitting, handling quotes and spaces correctly.
+
+---
+
+## 🛠️ Project Structure
+
+The project code is organized into two files, separating the core logic from the execution entry point:
+
+. ├── shelly/ │ └── main.py # Entry point (initializes and runs the Shell) └── shell.py # Contains the Shell class definition and all command logic
+
+
+---
+
+## 🚀 Getting Started
+
+### 1. Requirements
+
+You only need Python 3.x installed on your system.
+
+### 2. Running the Shell
+
+The entry point for the application is `shelly/main.py`. Execute this file from the project's root directory:
+
+```bash
+python shelly/main.py
+```
+
+## 🚀 Installation & Usage
 To run the shell, you need to execute the entry point file, which is located at shelly/main.py.
 Ensure Files are Correctly Placed: Make sure your Shell class is in shell.py and the execution logic is in shelly/main.py.
 Run the Script: Execute the main file using the Python interpreter. You should run the command from the directory containing the shelly folder and the shell.py file.Bashpython shelly/main.py
